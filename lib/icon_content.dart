@@ -21,3 +21,26 @@ class IconContent extends StatelessWidget {
     );
   }
 }
+
+// class RoundIconButton extends StatelessWidget {
+
+//   const RoundIconButton({super.key, required this.icon, required this.action});
+
+//   final IconData icon;
+//   final VoidCallback action;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return  RawMaterialButton(
+//       shape: const CircleBorder(),
+//       fillColor: const Color(0xFF4C4F5E),
+//       constraints: const BoxConstraints.tightFor(
+//         width: 56,
+//         height: 56,
+//         ),
+//       elevation: 0.0,
+//       onPressed: action,
+//       child: Icon(icon),
+//     );
+//   }
+// }
