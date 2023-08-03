@@ -1,9 +1,13 @@
+import 'package:bmi/floating_button_age.dart';
+import 'package:bmi/floating_button_weight.dart';
+import 'package:bmi/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
-import 'floating_button.dart';
+import 'bottom_button.dart';
+import 'calculator_brain.dart';
 
 enum Gender {
   male,
@@ -17,7 +21,10 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
-  int height = 180;
+
+  final brain = CalculatorBrain();
+
+  //int height = 180;
   //int weight = 60;
 
   // Color maleCardColour = inactiveCardColour;
@@ -106,7 +113,7 @@ class _InputPageState extends State<InputPage> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Text(height.toString(), style: kNumberTextStyle),
+                      Text(brain.height.toString(), style: kNumberTextStyle),
                       const Text(
                         'cm',
                         style: kLabelTextStyle,
@@ -125,12 +132,12 @@ class _InputPageState extends State<InputPage> {
                           const RoundSliderOverlayShape(overlayRadius: 30),
                     ),
                     child: Slider(
-                      value: height.toDouble(),
+                      value: brain.height.toDouble(),
                       min: 120,
                       max: 220,
                       onChanged: (double newValue) {
                         setState(() {
-                          height = newValue.round();
+                          brain.height = newValue.round();
                         });
                         print(newValue);
                       },
@@ -147,8 +154,8 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     colour: kActiveCardColour,
-                    cardChild: const FloatingButton(
-                      weight: 60,
+                    cardChild: FloatingButton(
+                      brain: brain,
                       label: 'WHEIGHT',
                     ),
                     onPress: () {},
@@ -157,8 +164,8 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     colour: kActiveCardColour,
-                    cardChild: const FloatingButton(
-                      weight: 60,
+                    cardChild: FloatingButton_age(
+                      age: 60,
                       label: 'AGE',
                     ),
                     onPress: () {},
@@ -167,11 +174,20 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBottomContainerColour,
-            margin: const EdgeInsets.only(top: 10),
-            width: double.infinity,
-            height: kBottonContainerHeight,
+          BottomButton(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    bmiResult: brain.calculateBMI(),
+                    resultText: brain.getResult(),
+                    interpretation: brain.getInterpretation(),
+                  ),
+                ),
+              );
+            },
+            buttonTitle: 'CALCULATE',
           )
         ],
       ),
