@@ -6,7 +6,7 @@ class CalculatorBrain {
   CalculatorBrain();
 
   int height = 180;
-  int weight = 50;
+  int weight = 70;
   int age = 20;
   Gender? selectedGender;
 
